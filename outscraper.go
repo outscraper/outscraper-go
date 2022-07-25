@@ -13,7 +13,7 @@ const (
 )
 
 type Client struct {
-	apiKey string
+	ApiKey string
 }
 
 type Request map[string]string
@@ -38,7 +38,7 @@ func (c Client) getAPIRequest(path string, parameters map[string]string) (Result
     fmt.Println(url.String())
 
     req, _ := http.NewRequest("GET", url.String(), nil)
-    req.Header.Add("X-API-KEY", c.apiKey)
+    req.Header.Add("X-API-KEY", c.ApiKey)
     req.Header.Add("Client", "Go SDK")
 
     response, doError := httpClient.Do(req)
