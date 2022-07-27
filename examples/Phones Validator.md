@@ -33,7 +33,7 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 ## Usage
 
 ```go
-// Search contacts from website:
+// Get information about the phone number:
 results, _ := client.PhonesEnricher(map[string]string {
 	"query": "12812368208",
 })
