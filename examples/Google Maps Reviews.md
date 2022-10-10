@@ -34,7 +34,7 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 
 ```go
 // Get reviews of the specific place by id
-results, _ := client.GoogleMapsReviewsV3(map[string]string {
+results, _ := client.GoogleMapsReviews(map[string]string {
 	"query": "rChIJrc9T9fpYwokRdvjYRHT8nI4",
   "reviewsLimit": "20",
   "language": "en",
@@ -42,7 +42,7 @@ results, _ := client.GoogleMapsReviewsV3(map[string]string {
 fmt.Println(results)
 
 // Get reviews for places found by search query
-results, _ := client.GoogleMapsReviewsV3(map[string]string {
+results, _ := client.GoogleMapsReviews(map[string]string {
 	"query": "Memphis Seoul brooklyn usa",
   "reviewsLimit": "20",
   "limit": "20",
@@ -52,7 +52,7 @@ fmt.Println(results)
 
 // Get only new reviews during last 24 hours
 yesterdayTimestamp := "1657980986"
-results, _ := client.GoogleMapsReviewsV3(map[string]string {
+results, _ := client.GoogleMapsReviews(map[string]string {
 	"query": "ChIJrc9T9fpYwokRdvjYRHT8nI4",
   "sort": "newest",
   "cutoff": yesterdayTimestamp,

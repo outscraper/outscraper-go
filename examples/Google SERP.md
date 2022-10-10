@@ -34,7 +34,7 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 
 ```go
 // Search for SERP results:
-results, _ := client.GoogleSearchV3(map[string]string {
+results, _ := client.GoogleSearch(map[string]string {
 	"query": "buy iphone 13 TX",
 	"language": "en",
 	"region": "us",

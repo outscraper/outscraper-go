@@ -65,23 +65,17 @@ func (c Client) GetRequestArchive(requestId string) (Result, error) {
 
 func (c Client) GoogleSearch(parameters map[string]string) ([]interface{}, error) {
     parameters["async"] = "false"
-    response, err := c.getAPIRequest("/google-search-v2", parameters)
-    return response["data"].([]interface{}), err
-}
-
-func (c Client) GoogleSearchV3(parameters map[string]string) ([]interface{}, error) {
-    parameters["async"] = "false"
     response, err := c.getAPIRequest("/google-search-v3", parameters)
     return response["data"].([]interface{}), err
 }
 
-func (c Client) GoogleMapsSearchV2(parameters map[string]string) ([]interface{}, error) {
+func (c Client) GoogleMapsSearch(parameters map[string]string) ([]interface{}, error) {
     parameters["async"] = "false"
     response, err := c.getAPIRequest("/maps/search-v2", parameters)
     return response["data"].([]interface{}), err
 }
 
-func (c Client) GoogleMapsReviewsV3(parameters map[string]string) ([]interface{}, error) {
+func (c Client) GoogleMapsReviews(parameters map[string]string) ([]interface{}, error) {
     parameters["async"] = "false"
     response, err := c.getAPIRequest("/maps/reviews-v3", parameters)
     return response["data"].([]interface{}), err

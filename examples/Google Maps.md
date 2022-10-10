@@ -34,7 +34,7 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 
 ```go
 // Search for businesses in specific locations:
-results, _ := client.GoogleMapsSearchV2(map[string]string {
+results, _ := client.GoogleMapsSearch(map[string]string {
 	"query": "restaurants brooklyn usa",
 	"limit": "20",
   "language": "en",
@@ -43,7 +43,7 @@ results, _ := client.GoogleMapsSearchV2(map[string]string {
 fmt.Println(results)
 
 // Get data of the specific place by id
-results, _ := client.GoogleMapsSearchV2(map[string]string {
+results, _ := client.GoogleMapsSearch(map[string]string {
 	"query": "ChIJrc9T9fpYwokRdvjYRHT8nI4",
   "language": "en",
 })
