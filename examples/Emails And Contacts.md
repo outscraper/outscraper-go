@@ -32,7 +32,7 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 
 ## Usage
 
-```python
+```go
 # Search contacts from website:
 results, _ := client.EmailsAndContacts(map[string]string {
 	"query": "outscraper.com",
