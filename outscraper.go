@@ -237,3 +237,15 @@ func (c Client) TrustpilotSearch(parameters map[string]string) ([]interface{}, e
     response, err := c.getAPIRequest("/trustpilot", parameters)
     return response["data"].([]interface{}), err
 }
+
+func (c Client) Similarweb(parameters map[string]string) ([]interface{}, error) {
+    parameters["async"] = "false"
+    response, err := c.getAPIRequest("/similarweb", parameters)
+    return response["data"].([]interface{}), err
+}
+
+func (c Client) CompanyWebsiteFinder(parameters map[string]string) ([]interface{}, error) {
+    parameters["async"] = "false"
+    response, err := c.getAPIRequest("/company-website-finder", parameters)
+    return response["data"].([]interface{}), err
+}
