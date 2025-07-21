@@ -249,3 +249,9 @@ func (c Client) CompanyWebsiteFinder(parameters map[string]string) ([]interface{
     response, err := c.getAPIRequest("/company-website-finder", parameters)
     return response["data"].([]interface{}), err
 }
+
+func (c Client) YellowPages(parameters map[string]string) ([]interface{}, error) {
+    parameters["async"] = "false"
+    response, err := c.getAPIRequest("/yellowpages-search", parameters)
+    return response["data"].([]interface{}), err
+}
