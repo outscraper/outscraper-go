@@ -1,6 +1,6 @@
-# Trustpilot With Python
+# Email Addresses Finder Scraper With Python
 
-Returns data from Trustpilot businesses. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Businesses-and-POI/paths/~1trustpilot/get).
+Allows to validate email addresses. Checks if emails are deliverable. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Email-Related/paths/~1email-validator/get).
 
 ## Installation
 
@@ -33,9 +33,9 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 ## Usage
 
 ```go
-// Search data from Trustpilot businesses:
-results, _ := client.Trustpilot(map[string]string {
-	"query": "outscraper.com",
+// Validate email addresses:
+results, _ := client.ValidateEmails(map[string]string {
+	"query": "support@outscraper.com",
 })
 fmt.Println(results)
 ```

@@ -1,7 +1,6 @@
-# Tripadvisor Reviews With Python
+# Trustpilot Search Scraper With Python
 
-Returns reviews from Tripadvisor businesses.
-In case no reviews were found by your search criteria, your search request will consume the usage of one review. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Reviews-and-Comments/paths/~1tripadvisor-reviews/get).
+Returns search results from Trustpilot. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Trustpilot/paths/~1trustpilot~1search/get).
 
 ## Installation
 
@@ -34,9 +33,9 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 ## Usage
 
 ```go
-// Get information about business:
-results, _ := client.TripadvisorReviews(map[string]string {
-	"query": "https://www.tripadvisor.com Restaurant_Review-g187147-d12947099-Reviews-Mayfair_Garden-Paris_Ile_de_France.html",
+// Get information about the search results from Trustpilot:
+results, _ := client.TrustpilotSearch(map[string]string {
+	"query": "real estate",
 })
 fmt.Println(results)
 ```

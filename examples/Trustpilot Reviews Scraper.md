@@ -1,6 +1,6 @@
-# Youtube Comments With Python
+# Trustpilot Reviews Scraper With Python
 
-Returns comments from YouTube videos.[Outscraper API](https://app.outscraper.cloud/api-docs#tag/Reviews-and-Comments/paths/~1youtube-comments/get).
+Returns reviews from Trustpilot businesses. In case no reviews were found by your search criteria, your search request will consume the usage of one review.[Outscraper API](https://app.outscraper.cloud/api-docs#tag/Reviews-and-Comments/paths/~1trustpilot~1reviews/get).
 
 ## Installation
 
@@ -33,9 +33,9 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 ## Usage
 
 ```go
-// Get information about the comments from YouTube videos:
-results, _ := client.YoutubeComments(map[string]string {
-	"query": "https://www.youtube.com/watch?v=ph5pHgklaZ0",
+// Get information about the reviews from Trustpilot:
+results, _ := client.Trustpilot(map[string]string {
+	"query": "real estate",
 })
 fmt.Println(results)
 ```

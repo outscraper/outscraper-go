@@ -1,6 +1,7 @@
-# Yellowpages With Python
+# Tripadvisor Reviews Scraper With Python
 
-Returns search results from Yellow Pages. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Businesses-and-POI/paths/~1yellowpages-search/get).
+Returns reviews from Tripadvisor businesses.
+In case no reviews were found by your search criteria, your search request will consume the usage of one review. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Reviews-and-Comments/paths/~1tripadvisor-reviews/get).
 
 ## Installation
 
@@ -33,9 +34,9 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 ## Usage
 
 ```go
-// Search results from Yellow Pages:
-results, _ := client.YellowPages(map[string]string {
-	"query": "outscraper.com",
+// Get information about business:
+results, _ := client.TripadvisorReviews(map[string]string {
+	"query": "https://www.tripadvisor.com Restaurant_Review-g187147-d12947099-Reviews-Mayfair_Garden-Paris_Ile_de_France.html",
 })
 fmt.Println(results)
 ```

@@ -1,6 +1,6 @@
-# Email Address Verifier Scraper With Python
+# Yellow Pages Search Scraper With Python
 
-Allows to validate email addresses. Checks if emails are deliverable. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Email-Related/paths/~1email-validator/get).
+Returns search results from Yellow Pages. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Businesses-and-POI/paths/~1yellowpages-search/get).
 
 ## Installation
 
@@ -33,9 +33,9 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 ## Usage
 
 ```go
-// Validate email addresses:
-results, _ := client.ValidateEmails(map[string]string {
-	"query": "support@outscraper.com",
+// Search results from Yellow Pages:
+results, _ := client.YellowPages(map[string]string {
+	"query": "outscraper.com",
 })
 fmt.Println(results)
 ```

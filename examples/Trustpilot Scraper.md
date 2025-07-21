@@ -1,6 +1,6 @@
-# Trustpilot Search With Python
+# Trustpilot Scraper With Python
 
-Returns search results from Trustpilot. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Trustpilot/paths/~1trustpilot~1search/get).
+Returns data from Trustpilot businesses. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Businesses-and-POI/paths/~1trustpilot/get).
 
 ## Installation
 
@@ -33,9 +33,9 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 ## Usage
 
 ```go
-// Get information about the search results from Trustpilot:
-results, _ := client.TrustpilotSearch(map[string]string {
-	"query": "real estate",
+// Search data from Trustpilot businesses:
+results, _ := client.Trustpilot(map[string]string {
+	"query": "outscraper.com",
 })
 fmt.Println(results)
 ```
