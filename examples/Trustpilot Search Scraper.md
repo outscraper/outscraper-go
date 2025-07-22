@@ -1,4 +1,4 @@
-# Trustpilot Search Scraper With Python
+# Trustpilot Search Scraper With Go
 
 Returns search results from Trustpilot. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Trustpilot/paths/~1trustpilot~1search/get).
 

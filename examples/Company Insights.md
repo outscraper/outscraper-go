@@ -1,4 +1,4 @@
-# Company Insights With Python
+# Company Insights With Go
 
 Finds company details such as revenue, size, founding year, public status, etc. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Other-Services/paths/~1company-insights/get).
 

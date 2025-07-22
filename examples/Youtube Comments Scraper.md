@@ -1,4 +1,4 @@
-# Youtube Comments Scraper With Python
+# Youtube Comments Scraper With Go
 
 Returns comments from YouTube videos.[Outscraper API](https://app.outscraper.cloud/api-docs#tag/Reviews-and-Comments/paths/~1youtube-comments/get).
 

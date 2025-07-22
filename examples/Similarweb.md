@@ -1,4 +1,4 @@
-# Similarweb With Python
+# Similarweb With Go
 
 Returns website analytics data including traffic, rankings, audience insights, and competitive intelligence from SimilarWeb [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Domain-Related/paths/~1similarweb/get).
 

@@ -1,4 +1,4 @@
-# Yellow Pages Search Scraper With Python
+# Yellow Pages Search Scraper With Go
 
 Returns search results from Yellow Pages. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Businesses-and-POI/paths/~1yellowpages-search/get).
 

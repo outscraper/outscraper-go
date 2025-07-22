@@ -1,4 +1,4 @@
-# Company Website Finder With Python
+# Company Website Finder With Go
 
 Finds company websites based on business names.[Outscraper API](https://app.outscraper.cloud/api-docs#tag/Domain-Related/paths/~1company-website-finder/get).
 

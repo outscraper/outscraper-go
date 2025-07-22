@@ -1,4 +1,4 @@
-# Trustpilot Scraper With Python
+# Trustpilot Scraper With Go
 
 Returns data from Trustpilot businesses. [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Businesses-and-POI/paths/~1trustpilot/get).
 
