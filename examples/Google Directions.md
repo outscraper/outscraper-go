@@ -34,9 +34,15 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 
 ```go
 # Returns directions:
-results, _ := client.GoogleMapsDirections(map[string]string {
-		"origin":      "[\"29.696596,76.994928\",\"30.715966244353,76.8053887016268\"]",
-		"destination": "[\"29.696596,76.994928\",\"30.723065,76.770169\"]",
-})
+results, _ := client.GoogleMapsDirections(map[string]interface{}{
+		"origin": [][]string{
+			{"29.696596", "76.994928"},
+			{"30.715966244353", "76.8053887016268"},
+		},
+		"destination": [][]string{
+			{"29.696596", "76.994928"},
+			{"30.723065", "76.770169"},
+		},
+	})
 fmt.Println(results)
 ```
