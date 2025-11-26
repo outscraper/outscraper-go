@@ -87,9 +87,23 @@ func (c Client) GoogleMapsSearchV3(parameters map[string]string) ([]interface{},
     return response["data"].([]interface{}), err
 }
 
-func (c Client) GoogleMapsDirections(parameters map[string]string) ([]interface{}, error) {
-    parameters["async"] = "false"
-    response, err := c.getAPIRequest("/maps/directions", parameters)
+func (c Client) GoogleMapsDirections(parameters map[string]interface{}) ([]interface{}, error) {
+    q := url.Values{}
+
+    for key, val := range parameters {
+        switch v := val.(type) {
+        case []string:
+            for _, item := range v {
+                q.Add(key, item)
+            }
+        case string:
+            q.Add(key, v)
+        }
+    }
+
+    q.Set("async", "false")
+
+    response, err := c.getAPIRequest("/maps/directions", q)
     return response["data"].([]interface{}), err
 }
 
