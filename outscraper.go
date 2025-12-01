@@ -125,6 +125,21 @@ func (c Client) GooglePlayReviews(parameters map[string]string) ([]interface{}, 
     return response["data"].([]interface{}), err
 }
 
+func (c Client) ContactsAndLeads(parameters map[string]string) ([]interface{}, error) {
+    parameters["async"] = "false"
+    response, err := c.getAPIRequest("/contacts-and-leads", parameters)
+    if err != nil {
+        return nil, err
+    }
+
+    data, ok := response["data"].([]interface{})
+    if !ok {
+        return nil, errors.New("unexpected response format: data is not an array")
+    }
+
+    return data, nil
+}
+
 func (c Client) EmailsAndContacts(parameters map[string]string) ([]interface{}, error) {
     parameters["async"] = "false"
     response, err := c.getAPIRequest("/emails-and-contacts", parameters)
