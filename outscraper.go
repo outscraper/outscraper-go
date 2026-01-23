@@ -1,11 +1,13 @@
 package outscraper
 
 import (
+    "bytes"
     "fmt"
     "net/url"
     "net/http"
     "encoding/json"
     "errors"
+    "strings"
 )
 
 const (
@@ -283,4 +285,196 @@ func (c Client) YellowPages(parameters map[string]string) ([]interface{}, error)
     parameters["async"] = "false"
     response, err := c.getAPIRequest("/yellowpages-search", parameters)
     return response["data"].([]interface{}), err
+}
+
+func (c Client) postAPIRequest(path string, parameters map[string]interface{}) (Result, error) {
+    httpClient := &http.Client{}
+    fullUrl := ApiUrl + path
+
+    payloadBytes, err := json.Marshal(parameters)
+    if err != nil {
+        return nil, errors.New("cannot encode payload")
+    }
+
+    req, _ := http.NewRequest("POST", fullUrl, bytes.NewBuffer(payloadBytes))
+    req.Header.Add("X-API-KEY", c.ApiKey)
+    req.Header.Add("Client", "Go SDK")
+    req.Header.Add("Content-Type", "application/json")
+    req.Header.Add("Accept", "application/json")
+
+    response, doError := httpClient.Do(req)
+    if doError != nil {
+        return nil, errors.New("cannot create request")
+    }
+    defer response.Body.Close()
+
+    decoder := json.NewDecoder(response.Body)
+    var result Result
+
+    decodeError := decoder.Decode(&result)
+    if decodeError != nil {
+        return nil, errors.New("cannot decode")
+    }
+
+    return result, nil
+}
+
+func (c Client) PostAPIRequest(path string, parameters map[string]interface{}) (Result, error) {
+    return c.postAPIRequest(path, parameters)
+}
+
+func (c Client) BusinessesSearch(
+    filters map[string]interface{},
+    limit int,
+    includeTotal bool,
+    cursor string,
+    fields []string,
+    asyncRequest bool,
+    ui bool,
+    webhook string,
+) (Result, error) {
+
+    payload := map[string]interface{}{
+        "filters":        map[string]interface{}{},
+        "limit":          limit,
+        "include_total":  includeTotal,
+        "async":          asyncRequest,
+        "ui":             ui,
+    }
+
+    if filters != nil {
+        payload["filters"] = filters
+    }
+    if cursor != "" {
+        payload["cursor"] = cursor
+    }
+    if fields != nil && len(fields) > 0 {
+        payload["fields"] = fields
+    }
+    if webhook != "" {
+        payload["webhook"] = webhook
+    }
+
+    res, err := c.postAPIRequest("/businesses", payload)
+    if err != nil {
+        return nil, err
+    }
+
+    if data, ok := res["data"]; ok {
+        if dataObj, ok2 := data.(map[string]interface{}); ok2 {
+            return dataObj, nil
+        }
+    }
+
+    return res, nil
+}
+
+func (c Client) BusinessesIterSearch(
+    filters map[string]interface{},
+    limit int,
+    fields []string,
+    includeTotal bool,
+) ([]interface{}, error) {
+
+    cursor := ""
+    all := make([]interface{}, 0)
+
+    for {
+        page, err := c.BusinessesSearch(
+            filters,
+            limit,
+            includeTotal,
+            cursor,
+            fields,
+            false,
+            false,
+            "",
+        )
+        if err != nil {
+            return nil, err
+        }
+
+        itemsRaw, ok := page["items"]
+        if !ok || itemsRaw == nil {
+            break
+        }
+
+        items, ok := itemsRaw.([]interface{})
+        if !ok || len(items) == 0 {
+            break
+        }
+
+        all = append(all, items...)
+
+        hasMore := false
+        if hm, ok := page["has_more"].(bool); ok {
+            hasMore = hm
+        }
+
+        nextCursor := ""
+        if nc, ok := page["next_cursor"]; ok && nc != nil {
+            if s, ok2 := nc.(string); ok2 {
+                nextCursor = strings.TrimSpace(s)
+            }
+        }
+
+        if !hasMore || nextCursor == "" {
+            break
+        }
+
+        cursor = nextCursor
+    }
+
+    return all, nil
+}
+
+func (c Client) BusinessesGetDetails(
+    businessId string,
+    fields []string,
+    asyncRequest bool,
+    ui bool,
+    webhook string,
+) (Result, error) {
+
+    if strings.TrimSpace(businessId) == "" {
+        return nil, errors.New("businessId is required")
+    }
+
+    params := map[string]string{}
+
+    if fields != nil && len(fields) > 0 {
+        params["fields"] = strings.Join(fields, ",")
+    }
+    if asyncRequest {
+        params["async"] = "true"
+    } else {
+        params["async"] = "false"
+    }
+    if ui {
+        params["ui"] = "true"
+    }
+    if webhook != "" {
+        params["webhook"] = webhook
+    }
+
+    encodedId := url.PathEscape(businessId)
+
+    res, err := c.getAPIRequest("/businesses/"+encodedId, params)
+    if err != nil {
+        return nil, err
+    }
+
+    if data, ok := res["data"]; ok {
+        if dataObj, ok2 := data.(map[string]interface{}); ok2 {
+            return dataObj, nil
+        }
+
+        if arr, ok2 := data.([]interface{}); ok2 && len(arr) > 0 {
+            if firstObj, ok3 := arr[0].(map[string]interface{}); ok3 {
+                return firstObj, nil
+            }
+        }
+    }
+
+    return res, nil
 }
