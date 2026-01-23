@@ -428,7 +428,7 @@ func (c Client) BusinessesIterSearch(
     return all, nil
 }
 
-func (c Client) BusinessesGetDetails(
+func (c Client) BusinessesGet(
     businessId string,
     fields []string,
     asyncRequest bool,
