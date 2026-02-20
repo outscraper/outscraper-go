@@ -332,6 +332,7 @@ func (c Client) BusinessesSearch(
     asyncRequest bool,
     ui bool,
     webhook string,
+    query string,
 ) (Result, error) {
 
     payload := map[string]interface{}{
@@ -353,6 +354,10 @@ func (c Client) BusinessesSearch(
     }
     if webhook != "" {
         payload["webhook"] = webhook
+    }
+
+    if strings.TrimSpace(query) != "" {
+        payload["query"] = query
     }
 
     res, err := c.postAPIRequest("/businesses", payload)
@@ -388,6 +393,7 @@ func (c Client) BusinessesIterSearch(
             fields,
             false,
             false,
+            "",
             "",
         )
         if err != nil {
