@@ -329,6 +329,9 @@ func (c Client) BusinessesSearch(
     includeTotal bool,
     cursor string,
     fields []string,
+    enrichments []string,
+    contactsPerCompany int,
+    emailsPerContact int,
     asyncRequest bool,
     ui bool,
     webhook string,
@@ -351,6 +354,34 @@ func (c Client) BusinessesSearch(
     }
     if fields != nil && len(fields) > 0 {
         payload["fields"] = fields
+    }
+    if enrichments != nil && len(enrichments) > 0 {
+        payload["enrichments"] = enrichments
+
+        hasContactsNLeads := false
+        for _, enrichment := range enrichments {
+            if strings.TrimSpace(enrichment) == "contacts_n_leads" {
+                hasContactsNLeads = true
+                break
+            }
+        }
+
+        if hasContactsNLeads {
+            if contactsPerCompany > 0 {
+                payload["contacts_per_company"] = contactsPerCompany
+            } else {
+                payload["contacts_per_company"] = 3
+            }
+            if emailsPerContact > 0 {
+                payload["emails_per_contact"] = emailsPerContact
+            } else {
+                payload["emails_per_contact"] = 1
+            }
+        } else if contactsPerCompany > 0 || emailsPerContact > 0 {
+            return nil, errors.New(`contactsPerCompany and emailsPerContact require enrichments to include "contacts_n_leads"`)
+        }
+    } else if contactsPerCompany > 0 || emailsPerContact > 0 {
+        return nil, errors.New(`contactsPerCompany and emailsPerContact require enrichments to include "contacts_n_leads"`)
     }
     if webhook != "" {
         payload["webhook"] = webhook
@@ -378,6 +409,9 @@ func (c Client) BusinessesIterSearch(
     filters map[string]interface{},
     limit int,
     fields []string,
+    enrichments []string,
+    contactsPerCompany int,
+    emailsPerContact int,
     includeTotal bool,
 ) ([]interface{}, error) {
 
@@ -391,6 +425,9 @@ func (c Client) BusinessesIterSearch(
             includeTotal,
             cursor,
             fields,
+            enrichments,
+            contactsPerCompany,
+            emailsPerContact,
             false,
             false,
             "",
