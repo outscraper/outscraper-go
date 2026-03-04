@@ -61,13 +61,11 @@ page, err := client.BusinessesSearch(
 	false,
 	"",
 	[]string{"name", "phone", "website", "address", "rating", "reviews"},
+	false,
+	false,
+	"",
+	"",
 	nil,
-	0,
-	0,
-	false,
-	false,
-	"",
-	"",
 )
 
 fmt.Println(page, err)
@@ -81,9 +79,6 @@ page, err := client.BusinessesSearch(
 	false,
 	"",
 	nil,
-	nil,
-	0,
-	0,
 	false,
 	false,
 	"",
@@ -107,17 +102,53 @@ page, err := client.BusinessesSearch(
 	false,
 	"",
 	[]string{"name", "phone"},
-	nil,
-	0,
-	0,
 	false,
 	false,
 	"",
 	"Add cafes too. Return address and reviews. Limit 20. Include total.",
+	nil,
 )
 
 fmt.Println(page, err)
 ```
+
+### Search with enrichments
+
+`enrichments` can be provided as:
+- **Object** (recommended): `map[string]interface{}{ "contacts_n_leads": {...}, "company_insights": map[string]interface{}{} }`
+
+#### Enrichments as object (recommended)
+```go
+filters := map[string]interface{}{
+	"country_code": "US",
+	"states": []string{"CA", "NY"},
+	"types": []string{"restaurant", "cafe"},
+}
+
+enrichments := map[string]interface{}{
+	"contacts_n_leads": map[string]interface{}{
+		"contacts_per_company": 4,
+		"emails_per_contact":   2,
+	},
+	"company_insights": map[string]interface{}{},
+}
+
+page, err := client.BusinessesSearch(
+	filters,
+	10,
+	false,
+	"",
+	[]string{"name", "phone"},
+	false,
+	false,
+	"",
+	"",
+	enrichments,
+)
+
+fmt.Println(page, err)
+```
+
 
 ### Iterate over all results (auto-pagination)
 ```go
@@ -131,10 +162,9 @@ all, err := client.BusinessesIterSearch(
 	filters,
 	100,
 	[]string{"name", "phone", "address", "rating", "reviews"},
-	nil,
-	0,
-	0,
 	false,
+	"",
+	nil,
 )
 
 fmt.Println(len(all), err)

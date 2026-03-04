@@ -329,13 +329,11 @@ func (c Client) BusinessesSearch(
     includeTotal bool,
     cursor string,
     fields []string,
-    enrichments []string,
-    contactsPerCompany int,
-    emailsPerContact int,
     asyncRequest bool,
     ui bool,
     webhook string,
     query string,
+    enrichments interface{},
 ) (Result, error) {
 
     payload := map[string]interface{}{
@@ -355,40 +353,16 @@ func (c Client) BusinessesSearch(
     if fields != nil && len(fields) > 0 {
         payload["fields"] = fields
     }
-    if enrichments != nil && len(enrichments) > 0 {
-        payload["enrichments"] = enrichments
-
-        hasContactsNLeads := false
-        for _, enrichment := range enrichments {
-            if strings.TrimSpace(enrichment) == "contacts_n_leads" {
-                hasContactsNLeads = true
-                break
-            }
-        }
-
-        if hasContactsNLeads {
-            if contactsPerCompany > 0 {
-                payload["contacts_per_company"] = contactsPerCompany
-            } else {
-                payload["contacts_per_company"] = 3
-            }
-            if emailsPerContact > 0 {
-                payload["emails_per_contact"] = emailsPerContact
-            } else {
-                payload["emails_per_contact"] = 1
-            }
-        } else if contactsPerCompany > 0 || emailsPerContact > 0 {
-            return nil, errors.New(`contactsPerCompany and emailsPerContact require enrichments to include "contacts_n_leads"`)
-        }
-    } else if contactsPerCompany > 0 || emailsPerContact > 0 {
-        return nil, errors.New(`contactsPerCompany and emailsPerContact require enrichments to include "contacts_n_leads"`)
-    }
     if webhook != "" {
         payload["webhook"] = webhook
     }
 
     if strings.TrimSpace(query) != "" {
         payload["query"] = query
+    }
+
+    if enrichments != nil {
+        payload["enrichments"] = enrichments
     }
 
     res, err := c.postAPIRequest("/businesses", payload)
@@ -409,10 +383,9 @@ func (c Client) BusinessesIterSearch(
     filters map[string]interface{},
     limit int,
     fields []string,
-    enrichments []string,
-    contactsPerCompany int,
-    emailsPerContact int,
     includeTotal bool,
+    query string,
+    enrichments interface{},
 ) ([]interface{}, error) {
 
     cursor := ""
@@ -425,13 +398,11 @@ func (c Client) BusinessesIterSearch(
             includeTotal,
             cursor,
             fields,
+            false,
+            false,
+            "",
+            query,
             enrichments,
-            contactsPerCompany,
-            emailsPerContact,
-            false,
-            false,
-            "",
-            "",
         )
         if err != nil {
             return nil, err
