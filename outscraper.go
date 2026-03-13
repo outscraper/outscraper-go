@@ -333,6 +333,7 @@ func (c Client) BusinessesSearch(
     ui bool,
     webhook string,
     query string,
+    enrichments interface{},
 ) (Result, error) {
 
     payload := map[string]interface{}{
@@ -360,6 +361,10 @@ func (c Client) BusinessesSearch(
         payload["query"] = query
     }
 
+    if enrichments != nil {
+        payload["enrichments"] = enrichments
+    }
+
     res, err := c.postAPIRequest("/businesses", payload)
     if err != nil {
         return nil, err
@@ -379,6 +384,8 @@ func (c Client) BusinessesIterSearch(
     limit int,
     fields []string,
     includeTotal bool,
+    query string,
+    enrichments interface{},
 ) ([]interface{}, error) {
 
     cursor := ""
@@ -394,7 +401,8 @@ func (c Client) BusinessesIterSearch(
             false,
             false,
             "",
-            "",
+            query,
+            enrichments,
         )
         if err != nil {
             return nil, err
