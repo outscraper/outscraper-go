@@ -129,7 +129,7 @@ func (c Client) GooglePlayReviews(parameters map[string]string) ([]interface{}, 
 
 func (c Client) ContactsAndLeads(parameters map[string]string) ([]interface{}, error) {
     parameters["async"] = "false"
-    response, err := c.getAPIRequest("/contacts-and-leads", parameters)
+    response, err := c.getAPIRequest("/leads-and-contacts", parameters)
     if err != nil {
         return nil, err
     }
