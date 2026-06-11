@@ -1,6 +1,6 @@
 # Emails And Contacts Scraper With Go
 
-Allows finding emails, social links, phones, and other contacts from domains and URLs via [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Email-Related/paths/~1contacts-and-leads/get).
+Allows finding emails, social links, phones, and other contacts from domains and URLs via [Outscraper API](https://app.outscraper.cloud/api-docs#tag/Email-Related/paths/~1leads-and-contacts/get).
 
 ## Installation
 
@@ -34,7 +34,7 @@ client := outscraper.Client{ApiKey: "SECRET_API_KEY"}
 
 ```go
 # Search contacts from website:
-results, _ := client.ContactsAndLeads(map[string]string {
+results, _ := client.LeadsAndContacts(map[string]string {
 	"query": "outscraper.com",
 })
 fmt.Println(results)
